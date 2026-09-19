@@ -5,7 +5,7 @@ import TreeElement from "tree-element";
 import type { ComponentOptions } from "./optionNames";
 
 import { attributeMappings, observedAttributes } from "./attributes";
-import { injectStyles } from "./injectStyles";
+import { injectHostStyles, injectStyles } from "./injectStyles";
 import { optionNames } from "./optionNames";
 import { getTreeData } from "./treeData";
 
@@ -212,6 +212,8 @@ export class TreeElementComponent extends HTMLElement {
         this.#options.data = inlineData;
       }
     }
+
+    injectHostStyles(this);
 
     if (!this.hasAttribute("unstyled")) {
       injectStyles(this);

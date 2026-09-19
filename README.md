@@ -221,6 +221,10 @@ ul.tree-element li.tree-element-selected > .tree-element-element {
 
 Add the `unstyled` attribute to bring your own stylesheet instead.
 
+The element itself is `display: block`. That rule is added in the same layer,
+with or without `unstyled`, because tree-element measures the element to find
+the drop targets during drag and drop, and an inline element has no size.
+
 The tree is rendered in the light dom, not in a shadow root. tree-element's
 keyboard handling, drag and drop and stylesheet rely on that.
 

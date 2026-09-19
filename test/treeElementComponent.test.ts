@@ -448,6 +448,32 @@ describe("styles", () => {
     expect(styles[0]?.textContent).toContain("ul.tree-element");
   });
 
+  it("makes the element a block, also when it is unstyled", async () => {
+    // A fresh root, because the document already has the styles.
+    const host = document.createElement("div");
+    const shadowRoot = host.attachShadow({ mode: "open" });
+    document.body.append(host);
+
+    for (let i = 0; i < 2; i++) {
+      const element = document.createElement("tree-element");
+      element.setAttribute("unstyled", "");
+      shadowRoot.append(element);
+    }
+    await nextTick();
+
+    const hostStyles = shadowRoot.querySelectorAll(
+      "style[data-tree-element-host-styles]",
+    );
+
+    expect(hostStyles).toHaveLength(1);
+    expect(hostStyles[0]?.textContent).toContain(
+      "tree-element {\n  display: block;\n}",
+    );
+    expect(
+      shadowRoot.querySelectorAll("style[data-tree-element-styles]"),
+    ).toHaveLength(0);
+  });
+
   it("adds the stylesheet to a shadow root", async () => {
     const host = document.createElement("div");
     const shadowRoot = host.attachShadow({ mode: "open" });
