@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>tree-element web component devserver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        padding: 1rem;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 0.5rem;
+        min-height: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h2>Inline json, drag and drop, first level open</h2>
+      <tree-element id="tree1" drag-and-drop auto-open="0" save-state="devserver">
+        <script type="application/json">
+          [
+            {
+              "name": "Saurischia",
+              "id": 1,
+              "children": [
+                { "name": "Herrerasaurians", "id": 2 },
+                {
+                  "name": "Theropods",
+                  "id": 3,
+                  "children": [
+                    { "name": "Coelophysoids", "id": 4 },
+                    { "name": "Ceratosaurians", "id": 5 }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Ornithischians",
+              "id": 6,
+              "children": [
+                { "name": "Heterodontosaurids", "id": 7 },
+                { "name": "Thyreophorans", "id": 8 }
+              ]
+            }
+          ]
+        </script>
+      </tree-element>
+      <p>
+        <button id="toggle-dnd">Toggle drag and drop</button>
+        <button id="toggle-rtl">Toggle rtl</button>
+        <button id="add-node">Add node to selection</button>
+      </p>
+      <pre id="log"></pre>
+    </section>
+    <section>
+      <h2>Data from javascript, not selectable</h2>
+      <tree-element id="tree2" selectable="false"></tree-element>
+    </section>
+
+    <script type="module">
+      import "/tree_element_web_component.js";
+
+      const tree1 = document.getElementById("tree1");
+      const log = document.getElementById("log");
+
+      for (const name of ["tree.init", "tree.select", "tree.move", "tree.open", "tree.close"]) {
+        tree1.addEventListener(name, (e) => {
+          const node = e.detail?.node ?? e.detail?.moveInfo?.movedNode;
+          log.textContent = `${name}${node ? ": " + node.name : ""}\n` + log.textContent;
+        });
+      }
+
+      document.getElementById("toggle-dnd").onclick = () => {
+        tree1.toggleAttribute("drag-and-drop");
+      };
+      document.getElementById("toggle-rtl").onclick = () => {
+        tree1.rtl = !tree1.rtl;
+      };
+      document.getElementById("add-node").onclick = () => {
+        const selected = tree1.getSelectedNode();
+        if (selected) {
+          tree1.appendNode({ name: `child of ${selected.name}` }, selected);
+        }
+      };
+
+      const tree2 = document.getElementById("tree2");
+      tree2.data = [
+        { name: "fruit", children: [{ name: "apple" }, { name: "pear" }] },
+        { name: "vegetables", children: [{ name: "carrot" }] },
+      ];
+      tree2.autoOpen = true;
+    </script>
+  </body>
+</html>

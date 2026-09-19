@@ -1,0 +1,68 @@
+{
+  "name": "tree-element-web-component",
+  "version": "0.1.0",
+  "description": "The <tree-element> web component, a custom element around tree-element",
+  "keywords": [
+    "tree",
+    "web-component",
+    "custom-element",
+    "tree-element"
+  ],
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./tree_element_web_component.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./tree_element_web_component.js"
+    },
+    "./tree_element_web_component.js": "./tree_element_web_component.js",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": true,
+  "files": [
+    "lib",
+    "src",
+    "tree_element_web_component.js",
+    "tree_element_web_component.js.map"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbraak/tree-element-web-component.git"
+  },
+  "scripts": {
+    "generate-styles": "node config/generateStyles.mjs",
+    "build-lib": "pnpm generate-styles && tsc --project tsconfig.build.json",
+    "build": "pnpm build-lib && rollup --config config/rollup.config.mjs",
+    "devserver": "pnpm build-lib && SERVE=true rollup --config config/rollup.config.mjs --watch",
+    "lint": "eslint config src test",
+    "prettier": "prettier \"src/**/*.ts\" \"test/**/*.ts\" \"config/**/*.mjs\" --write",
+    "tsc": "pnpm generate-styles && tsc --noEmit --project tsconfig.json",
+    "test": "pnpm generate-styles && vitest run --config test/vitest.config.mjs",
+    "test-watch": "vitest --config test/vitest.config.mjs",
+    "ci": "pnpm lint && pnpm tsc && pnpm test && pnpm build",
+    "prepublishOnly": "pnpm run ci"
+  },
+  "dependencies": {
+    "tree-element": "^0.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "eslint": "^10.10.0",
+    "eslint-plugin-perfectionist": "^5.11.1",
+    "jsdom": "^30.1.0",
+    "prettier": "^3.9.8",
+    "rollup": "^4.63.3",
+    "rollup-plugin-serve": "^3.0.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.1"
+  }
+}

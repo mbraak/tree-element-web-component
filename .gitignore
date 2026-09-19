@@ -1,0 +1,13 @@
+node_modules/
+
+# Build output. The bundle in the project root is checked in on purpose.
+lib/
+
+# Generated from tree-element's stylesheet by config/generateStyles.mjs
+src/styles.ts
+
+# Test output
+coverage/
+
+*.tgz
+.DS_Store
