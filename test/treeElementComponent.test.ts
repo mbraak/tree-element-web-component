@@ -109,8 +109,11 @@ describe("data", () => {
       });
     });
 
-    // tree-element adds a cache busting parameter.
-    expect(fetchMock.mock.calls[0]?.[0]).toMatch(/^\/nodes\/\?_=\d+$/);
+    // tree-element resolves the url against the page and adds a cache busting
+    // parameter.
+    const url = new URL(fetchMock.mock.calls[0]?.[0] as string);
+    expect(url.pathname).toBe("/nodes/");
+    expect(url.searchParams.get("_")).toMatch(/^\d+$/);
     expect(getTitles(element)).toEqual(["node1", "node2"]);
   });
 
@@ -197,6 +200,23 @@ describe("attributes", () => {
     // The selected node's title is the focusable element.
     element.selectNode(element.getNodeByNameMustExist("node1"));
     expect(screen.getByText("node1")).toHaveAttribute("tabindex", "3");
+  });
+
+  it("labels the tree with tree-aria-label and tree-aria-labelledby", async () => {
+    const element = await createElement(
+      `<tree-element tree-aria-label="Files" tree-aria-labelledby="heading"></tree-element>`,
+      (el) => {
+        el.data = exampleData;
+      },
+    );
+
+    expect(element.options.ariaLabel).toBe("Files");
+    expect(element.ariaLabelledBy).toBe("heading");
+    expect(element).not.toHaveAttribute("aria-label");
+
+    const tree = screen.getByRole("tree");
+    expect(tree).toHaveAttribute("aria-label", "Files");
+    expect(tree).toHaveAttribute("aria-labelledby", "heading");
   });
 
   it("recreates the tree when an attribute changes, keeping the nodes and the state", async () => {

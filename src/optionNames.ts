@@ -1,18 +1,27 @@
 import type { TreeElementOptions } from "tree-element";
 
 /**
- * The options that are also properties of the element. `tabIndex` is left
- * out because `HTMLElement` already has a `tabIndex` property; set it through
- * the `tab-index` attribute or the `options` property instead.
+ * The options that are also properties of the element. `tabIndex` and
+ * `ariaLabel` are left out because `HTMLElement` already has these
+ * properties; set them through the `tab-index` and `tree-aria-label`
+ * attributes or the `options` property instead.
  */
-export type ComponentOptionName = Exclude<keyof TreeElementOptions, "tabIndex">;
+export type ComponentOptionName = Exclude<
+  keyof TreeElementOptions,
+  ExcludedOptionName
+>;
 
-export type ComponentOptions = Partial<Omit<TreeElementOptions, "tabIndex">>;
+export type ComponentOptions = Partial<
+  Omit<TreeElementOptions, ExcludedOptionName>
+>;
+
+type ExcludedOptionName = "ariaLabel" | "tabIndex";
 
 // A record instead of an array, so typescript complains when an option is
 // missing or misspelled.
 const optionNameRecord: Record<ComponentOptionName, true> = {
   animationSpeed: true,
+  ariaLabelledBy: true,
   autoEscape: true,
   autoOpen: true,
   buttonLeft: true,
