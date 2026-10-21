@@ -96,30 +96,32 @@ tree.dataUrl = (node) => (node ? `/nodes/?node=${node.id}` : "/nodes/");
 Options with a simple value are attributes, in kebab-case. An attribute that
 is not set leaves the option at tree-element's default.
 
-| Attribute           | Option            | Value                                        |
-| ------------------- | ----------------- | -------------------------------------------- |
-| `animation-speed`   | `animationSpeed`  | `fast`, `slow` or milliseconds               |
-| `auto-escape`       | `autoEscape`      | boolean                                      |
-| `auto-open`         | `autoOpen`        | boolean or a number of levels                |
-| `button-left`       | `buttonLeft`      | boolean                                      |
-| `class-prefix`      | `classPrefix`     | string                                       |
-| `closed-icon`       | `closedIcon`      | html string                                  |
-| `common-class-name` | `commonClassName` | string                                       |
-| `data-url`          | `dataUrl`         | url                                          |
-| `drag-and-drop`     | `dragAndDrop`     | boolean                                      |
-| `keyboard-support`  | `keyboardSupport` | boolean                                      |
-| `open-folder-delay` | `openFolderDelay` | milliseconds, or `false`                     |
-| `opened-icon`       | `openedIcon`      | html string                                  |
-| `rtl`               | `rtl`             | boolean (`data-rtl` works too)               |
-| `save-state`        | `saveState`       | boolean, or the storage key                  |
-| `selectable`        | `selectable`      | boolean                                      |
-| `show-empty-folder` | `showEmptyFolder` | boolean                                      |
-| `slide`             | `slide`           | boolean                                      |
-| `start-dnd-delay`   | `startDndDelay`   | milliseconds                                 |
-| `tab-index`         | `tabIndex`        | number                                       |
-| `tree-class-name`   | `treeClassName`   | string                                       |
-| `use-context-menu`  | `useContextMenu`  | boolean                                      |
-| `unstyled`          |                   | Do not add the stylesheet to the page        |
+| Attribute              | Option            | Value                                     |
+| ---------------------- | ----------------- | ----------------------------------------- |
+| `animation-speed`      | `animationSpeed`  | `fast`, `slow` or milliseconds            |
+| `auto-escape`          | `autoEscape`      | boolean                                   |
+| `auto-open`            | `autoOpen`        | boolean or a number of levels             |
+| `button-left`          | `buttonLeft`      | boolean                                   |
+| `class-prefix`         | `classPrefix`     | string                                    |
+| `closed-icon`          | `closedIcon`      | html string                               |
+| `common-class-name`    | `commonClassName` | string                                    |
+| `data-url`             | `dataUrl`         | url                                       |
+| `drag-and-drop`        | `dragAndDrop`     | boolean                                   |
+| `keyboard-support`     | `keyboardSupport` | boolean                                   |
+| `open-folder-delay`    | `openFolderDelay` | milliseconds, or `false`                  |
+| `opened-icon`          | `openedIcon`      | html string                               |
+| `rtl`                  | `rtl`             | boolean (`data-rtl` works too)            |
+| `save-state`           | `saveState`       | boolean, or the storage key               |
+| `selectable`           | `selectable`      | boolean                                   |
+| `show-empty-folder`    | `showEmptyFolder` | boolean                                   |
+| `slide`                | `slide`           | boolean                                   |
+| `start-dnd-delay`      | `startDndDelay`   | milliseconds                              |
+| `tab-index`            | `tabIndex`        | number                                    |
+| `tree-aria-label`      | `ariaLabel`       | string, the accessible name of the tree   |
+| `tree-aria-labelledby` | `ariaLabelledBy`  | the id of the element that names the tree |
+| `tree-class-name`      | `treeClassName`   | string                                    |
+| `use-context-menu`     | `useContextMenu`  | boolean                                   |
+| `unstyled`             |                   | Do not add the stylesheet to the page     |
 
 A boolean attribute is true when it is present: `<tree-element drag-and-drop>`.
 Options that default to true are switched off with the value `false`:
@@ -150,8 +152,10 @@ tree.options = { autoOpen: true, saveState: "my-tree" };
 `tree` is the underlying `TreeElement` instance. It is `null` before the
 element is connected to the document, and after it is removed from it.
 
-`tabIndex` is the one option that is not a property, because `HTMLElement`
-already has one. Use the `tab-index` attribute or `options` instead.
+`tabIndex` and `ariaLabel` are the options that are not properties, because
+`HTMLElement` already has both. Use the `tab-index` and `tree-aria-label`
+attributes or `options` instead. Setting `tree.ariaLabel` labels the element
+itself, not the tree inside it.
 
 ### Changing options later
 

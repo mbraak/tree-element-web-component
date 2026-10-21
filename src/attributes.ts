@@ -109,6 +109,10 @@ export const attributeMappings: Record<string, AttributeMapping> = {
   slide: boolean("slide"),
   "start-dnd-delay": number("startDndDelay"),
   "tab-index": number("tabIndex"),
+  // Not aria-label and aria-labelledby, because those label the element
+  // itself; these options label the tree inside it.
+  "tree-aria-label": string("ariaLabel"),
+  "tree-aria-labelledby": string("ariaLabelledBy"),
   "tree-class-name": string("treeClassName"),
   "use-context-menu": boolean("useContextMenu"),
 };
