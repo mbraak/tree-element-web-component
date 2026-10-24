@@ -197,9 +197,32 @@ describe("attributes", () => {
 
     expect(element.options.tabIndex).toBe(3);
 
-    // The selected node's title is the focusable element.
+    // The selected node's li, the treeitem, is the focusable element.
     element.selectNode(element.getNodeByNameMustExist("node1"));
-    expect(screen.getByText("node1")).toHaveAttribute("tabindex", "3");
+    expect(getLi("node1")).toHaveAttribute("tabindex", "3");
+  });
+
+  it("maps multi-select to the multiSelect option", async () => {
+    const element = await createElement(
+      `<tree-element multi-select></tree-element>`,
+      (el) => {
+        el.data = exampleData;
+      },
+    );
+
+    expect(element.multiSelect).toBe(true);
+    expect(screen.getByRole("tree")).toHaveAttribute(
+      "aria-multiselectable",
+      "true",
+    );
+
+    // A click adds a node to the selection.
+    screen.getByText("node1").click();
+    screen.getByText("node2").click();
+    expect(element.getSelectedNodes().map((node) => node.name)).toEqual([
+      "node1",
+      "node2",
+    ]);
   });
 
   it("labels the tree with tree-aria-label and tree-aria-labelledby", async () => {

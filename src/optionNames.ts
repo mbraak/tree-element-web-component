@@ -33,6 +33,7 @@ const optionNameRecord: Record<ComponentOptionName, true> = {
   dataUrl: true,
   dragAndDrop: true,
   keyboardSupport: true,
+  multiSelect: true,
   nodeClass: true,
   onCanMove: true,
   onCanMoveTo: true,

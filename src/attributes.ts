@@ -97,6 +97,7 @@ export const attributeMappings: Record<string, AttributeMapping> = {
   "data-url": string("dataUrl"),
   "drag-and-drop": boolean("dragAndDrop"),
   "keyboard-support": boolean("keyboardSupport"),
+  "multi-select": boolean("multiSelect"),
   "open-folder-delay": {
     option: "openFolderDelay",
     parse: parseOpenFolderDelay,
