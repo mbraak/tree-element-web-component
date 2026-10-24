@@ -62,6 +62,37 @@
       <h2>Data from javascript, not selectable</h2>
       <tree-element id="tree2" selectable="false"></tree-element>
     </section>
+    <section>
+      <h2>Multiselect</h2>
+      <tree-element id="tree3" multi-select auto-open tree-aria-label="Animals">
+        <script type="application/json">
+          [
+            {
+              "name": "Mammals",
+              "id": 1,
+              "children": [
+                { "name": "Lion", "id": 2 },
+                { "name": "Elephant", "id": 3 },
+                { "name": "Whale", "id": 4 }
+              ]
+            },
+            {
+              "name": "Birds",
+              "id": 5,
+              "children": [
+                { "name": "Eagle", "id": 6 },
+                { "name": "Penguin", "id": 7 }
+              ]
+            }
+          ]
+        </script>
+      </tree-element>
+      <p>
+        <button id="select-birds">Select all birds</button>
+        <button id="clear-selection">Clear selection</button>
+      </p>
+      <pre id="selected"></pre>
+    </section>
 
     <script type="module">
       import "/tree_element_web_component.js";
@@ -95,6 +126,33 @@
         { name: "vegetables", children: [{ name: "carrot" }] },
       ];
       tree2.autoOpen = true;
+
+      const tree3 = document.getElementById("tree3");
+      const selected = document.getElementById("selected");
+
+      const showSelection = () => {
+        selected.textContent = tree3
+          .getSelectedNodes()
+          .map((node) => node.name)
+          .join("\n");
+      };
+
+      for (const name of ["tree.init", "tree.select", "tree.deselect"]) {
+        tree3.addEventListener(name, showSelection);
+      }
+
+      document.getElementById("select-birds").onclick = () => {
+        for (const node of tree3.getNodeById(5).children) {
+          tree3.addToSelection(node);
+        }
+        showSelection();
+      };
+      document.getElementById("clear-selection").onclick = () => {
+        for (const node of tree3.getSelectedNodes()) {
+          tree3.removeFromSelection(node);
+        }
+        showSelection();
+      };
     </script>
   </body>
 </html>
