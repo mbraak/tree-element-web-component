@@ -108,6 +108,7 @@ is not set leaves the option at tree-element's default.
 | `data-url`             | `dataUrl`         | url                                       |
 | `drag-and-drop`        | `dragAndDrop`     | boolean                                   |
 | `keyboard-support`     | `keyboardSupport` | boolean                                   |
+| `multi-select`         | `multiSelect`     | boolean                                   |
 | `open-folder-delay`    | `openFolderDelay` | milliseconds, or `false`                  |
 | `opened-icon`          | `openedIcon`      | html string                               |
 | `rtl`                  | `rtl`             | boolean (`data-rtl` works too)            |
