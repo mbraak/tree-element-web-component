@@ -47,7 +47,7 @@
     "prepublishOnly": "pnpm run ci"
   },
   "dependencies": {
-    "tree-element": "link:../tree-element"
+    "tree-element": "^0.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
